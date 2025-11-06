@@ -80,12 +80,12 @@ function setGame() {
 
 webLoad();
 
-function interval() {
-    for (var i = 0; i < colorBoxes.length; i++) {
-        colorBoxes[i].style.backgroundColor = pickCorrectColor
-    }
-    webLoad();
-}
+// function interval() {
+//     for (var i = 0; i < colorBoxes.length; i++) {
+//         colorBoxes[i].style.backgroundColor = pickCorrectColor
+//     }
+//     webLoad();
+// }
 // parent addeventlistener
 // event ka use parent ke andar ke element ka track rakhne ke liye hai
 function trackBtn(event) {
@@ -103,6 +103,7 @@ function trackBtn(event) {
             bestStreak = currentStreak;
             bestStreakDisplay.textContent = bestStreak;
             localStorage.setItem('highBestStrak', bestStreak);
+            messageDisplay.innerText = '🎉 NEW BEST STREAK! 🎉';
         }
     }
     else {
@@ -140,6 +141,8 @@ function easy() {
     // switch to easy: use 3 colors and hide/disable the remaining boxes
     num = 3;
     setGame(); //for 3 box
+    easyBtn.classList.add('selected');
+    hardBtn.classList.remove('selected');
     for (var i = num; i < colorBoxes.length; i++) {
         //  hide extra boxes
         colorBoxes[i].style.display = 'none';
@@ -149,6 +152,8 @@ function easy() {
 function hard() {
     num = 6;
     setGame();
+    hardBtn.classList.add('selected');
+    easyBtn.classList.remove('selected');
     for (var i = 0; i < colorBoxes.length; i++) {
         colorBoxes[i].style.pointerEvents = 'auto';
         colorBoxes[i].style.opacity = '1';
