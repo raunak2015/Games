@@ -12,16 +12,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    
-}
-#video{
-    position: absolute;
-    z-index: -1;
-    height: 120vh;
-    display: none;
 }
 
-.container {    
+/* Main Container */
+.container {
     background: white;
     border-radius: 20px;
     padding: 40px;
@@ -29,10 +23,9 @@ body {
     max-width: 600px;
     width: 100%;
     text-align: center;
-    
 }
 
-
+/* Title Styles */
 h1 {
     color: #667eea;
     font-size: 2.5em;
@@ -45,7 +38,7 @@ h1 {
     margin-bottom: 30px;
 }
 
-
+/* Score Section */
 .score-section {
     display: flex;
     gap: 20px;
@@ -72,7 +65,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Timer Section */
 .timer-section {
     background: #f8f9fa;
     border-radius: 15px;
@@ -93,7 +86,7 @@ h1 {
     font-family: 'Courier New', monospace;
 }
 
-
+/* Button Section */
 .button-section {
     display: flex;
     flex-direction: column;
@@ -101,7 +94,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-
+/* Click Button */
 .click-btn {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
@@ -131,7 +124,7 @@ h1 {
     box-shadow: none;
 }
 
-
+/* Start Button */
 .start-btn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -154,7 +147,7 @@ h1 {
     transform: translateY(0);
 }
 
-
+/* Reset Button */
 .reset-btn {
     background: #ff6b6b;
     color: white;
@@ -172,7 +165,7 @@ h1 {
     transform: translateY(-2px);
 }
 
-
+/* Status Message */
 .status-message {
     font-size: 1.2em;
     font-weight: bold;
@@ -182,7 +175,7 @@ h1 {
     color: #333;
 }
 
-
+/* Pause Button */
 #pauseButton {
     background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
     color: white;
@@ -211,7 +204,14 @@ h1 {
     box-shadow: none;
 }
 
-
+video
+{ display: none;
+    position: absolute;
+    height:100%;
+    width: 100vw;
+    z-index: -1;
+}
+/* Responsive Design */
 @media (max-width: 600px) {
     .container {
         padding: 25px;
