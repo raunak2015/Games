@@ -94,13 +94,35 @@ function trackBtn(event) {
     var rgb = element.style.backgroundColor;
     console.log(rgb);
     if (pickCorrectColor === rgb) {
-        messageDisplay.textContent = "You won!!"
         currentStreak++;
-        currentStreakDisplay.textContent = currentStreak;
-        webLoad();
+        if(currentStreak == 1){
+            messageDisplay.textContent = "First Win!";
+        }
+        else if (currentStreak >=3){
+            messageDisplay.textContent = "Streak!";
+        }
+        else{
+            messageDisplay.textContent = "You Won!!";
+
+        }
+            currentStreakDisplay.textContent = currentStreak;
+        element.style.border = "10px solid gold"
+        colorBoxes.forEach(box => {
+            box.style.pointerEvents = 'none';
+            // box.style.opacity = '0.6';
+        });
+        setTimeout(() => {
+            webLoad();
+            element.style.border = "none"
+            colorBoxes.forEach(box => {
+                box.style.pointerEvents = 'auto';
+                box.style.opacity = '0.6';
+            });
+        }, 1000);
         if (bestStreak < currentStreak) {
             // update bestStreak variable, UI and persist it
             bestStreak = currentStreak;
+            colorDisplay.style.fontWeight = 'bold';
             bestStreakDisplay.textContent = bestStreak;
             localStorage.setItem('highBestStrak', bestStreak);
             messageDisplay.innerText = '🎉 NEW BEST STREAK! 🎉';
@@ -109,6 +131,10 @@ function trackBtn(event) {
     else {
         messageDisplay.textContent = `OOPS WRONG ANSWER!! your score is ${currentStreak}`
         currentStreakDisplay.textContent = 0;
+        element.classList.add('shake');
+        setTimeout(() => {
+            element.classList.remove('shake');
+        }, 1000);
         currentStreak = 0;
         // Disable all color boxes
         colorBoxes.forEach(box => {
@@ -141,19 +167,20 @@ function easy() {
     // switch to easy: use 3 colors and hide/disable the remaining boxes
     num = 3;
     setGame(); //for 3 box
-    easyBtn.classList.add('selected');
+    easyBtn.classList.add('green');
     hardBtn.classList.remove('selected');
     for (var i = num; i < colorBoxes.length; i++) {
         //  hide extra boxes
         colorBoxes[i].style.display = 'none';
     }
+
 }
 // for all 6 
 function hard() {
     num = 6;
     setGame();
     hardBtn.classList.add('selected');
-    easyBtn.classList.remove('selected');
+    easyBtn.classList.remove('green');
     for (var i = 0; i < colorBoxes.length; i++) {
         colorBoxes[i].style.pointerEvents = 'auto';
         colorBoxes[i].style.opacity = '1';

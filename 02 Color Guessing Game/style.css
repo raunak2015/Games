@@ -135,6 +135,11 @@ header h1 {
     color: #232526;
     border-color: white;
 }
+.mode-btn.green {
+    background: rgb(92, 255, 92);
+    color: #232526;
+    border-color: rgb(92, 255, 92);
+}
 
 /* Color Box Grid */
 .color-box-container {
@@ -155,12 +160,30 @@ header h1 {
 
 .color-box:hover {
     transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.5);
+    /* border-color: rgba(255, 255, 255, 0.5); */
 }
 
 .color-box.fade {
     opacity: 0.2;
     pointer-events: none;
+}
+.green{
+    background-color: green;
+}
+
+.golden{
+    border: 10px solid gold;
+}
+.shake {
+  animation: shake 1s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
 }
 
 /* Responsive Design */
