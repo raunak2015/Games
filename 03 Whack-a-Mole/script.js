@@ -14,6 +14,7 @@ var time = 30;
 var bestScore = 0;
 var playGame = false;
 var gameId = null;
+var paused = false;
 
 //common function
 
@@ -119,7 +120,37 @@ function resetGame(){
 }
 
 function pauseGame(){
-    
+    if (startBtn.disabled === false && !playGame) return;
+
+    paused = !paused;
+
+    if (paused) {
+        // Pause game: stop timer and stop moles from appearing
+        playGame = false;
+        if (gameId) {
+            clearInterval(gameId);
+            gameId = null;
+        }
+        pauseBtn.textContent = 'Resume';
+        // disable clicking on moles while paused
+        moles.forEach(m => m.style.pointerEvents = 'none');
+    } else {
+        // Resume game: enable moles and restart timer and popping
+        playGame = true;
+        pauseBtn.textContent = 'Pause';
+        moles.forEach(m => m.style.pointerEvents = 'auto');
+        // resume popping and timer
+        popGame();
+        if (!gameId) {
+            gameId = setInterval(function () {
+                time--;
+                if (time == 0) {
+                    endGame();
+                }
+                displayContent();
+            }, 1000);
+        }
+    }
 }
 webload();
 moles.forEach(box => {
