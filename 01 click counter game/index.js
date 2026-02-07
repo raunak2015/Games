@@ -6,7 +6,7 @@ var startButton = document.querySelector('#startButton');
 var pauseButton = document.querySelector('#pauseButton');
 var resetButton = document.querySelector('#resetButton');
 var statusMessage = document.querySelector('#statusMessage');
-// var video = document.getElementById("video");
+
 var body = document.querySelector('body');
 
 
@@ -39,9 +39,7 @@ function displayMessage() {
 function statuMsg(msg) {
     statusMessage.textContent = msg;
 }
-// function playvideo() {
-//     video.style.display = "block";
-// }
+
 
 function endGame() {
     clearInterval(idTrack);
@@ -53,16 +51,10 @@ function endGame() {
     clickButton.style.transform = 'scale(1)';
     if (current > high) {
         localStorage.setItem('highScore', current);
-        high = current;
-        body.style.background = "gold";
-
-        
-        setTimeout(() => {
-            body.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-        }, 1000);
-        // playvideo();
+        high = current; // Keep this line to update the 'high' variable
+        triggerCelebration();
         displayMessage();
-        statuMsg(`Great job! Your score is higher than the previous one! \n You clicked ${current / 10} times per second!`);
+        // statuMsg call removed to prevent overwriting "New High Score!"
         // setInterval()
     } else {
         statuMsg(`Oops! Your score is lower than your high score. Try again! \n You clicked ${current / 10} times per second!`);
@@ -81,7 +73,7 @@ function startGame() {
     startButton.disabled = true;
     pauseButton.disabled = false;
     statuMsg(" Game started! Click as fast as you can!");
-    video.style.display = "none";
+
     idTrack = setInterval(function () {
         if (!paused) {
             time1--;
@@ -97,8 +89,8 @@ function clickMe() {
     if (track && !paused) {
         current++;
 
-        if (current > 20) {
-            currentScore.style.color = 'red'
+        if (current > high) {
+            currentScore.style.color = '#ff4444' // Neon red
         }
         if (current < 11) {
             clickButton.style.transform = `scale(1.${current})`;
@@ -132,7 +124,7 @@ function resetGame() {
     displayMessage();
     statuMsg(" Game has been reset. Ready for a fresh start! ");
     clearInterval(idTrack);
-    video.style.display = "none";
+
     track = false;
     paused = false;
     startButton.disabled = false;
@@ -146,3 +138,50 @@ clickButton.addEventListener('click', clickMe);
 pauseButton.addEventListener('click', pauseGame);
 resetButton.addEventListener('click', resetGame);
 window.addEventListener('load', loadContent);
+
+function triggerCelebration() {
+    // 1. Background Glow
+    body.classList.add('celebration-mode');
+
+    // 2. Score Animation
+    currentScore.classList.add('high-score-anim');
+    highScore.classList.add('high-score-anim');
+
+    // 3. Message
+    statuMsg("🎉 New High Score! 🎉");
+
+    // 4. Confetti Effect
+    const colors = ['#00f3ff', '#bc13fe', '#ffd700', '#ff0055', '#ffffff'];
+    const confettiCount = 60;
+
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+
+        // Random properties
+        const bg = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100 + 'vw';
+        const animDuration = (Math.random() * 1 + 1.5) + 's'; // 1.5s - 2.5s
+        const animDelay = (Math.random() * 0.5) + 's';
+
+        confetti.style.backgroundColor = bg;
+        confetti.style.left = left;
+        confetti.style.animationDuration = animDuration;
+        confetti.style.animationDelay = animDelay;
+
+        document.body.appendChild(confetti);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+            confetti.remove();
+        }, 2500);
+    }
+
+    // 5. Cleanup
+    setTimeout(() => {
+        body.classList.remove('celebration-mode');
+        currentScore.classList.remove('high-score-anim');
+        highScore.classList.remove('high-score-anim');
+        // Optional: Reset message if you want, but "New High Score" is nice to keep until they play again
+    }, 2500);
+}
